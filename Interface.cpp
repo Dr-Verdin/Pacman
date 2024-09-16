@@ -58,12 +58,16 @@ class Bloco{
     }
 
     // Função para desenhar uma imagem
-    void draw(){
-        // bom dia
-        this.image.copyTo(whiteCanvas(cv::Rect(0, 0, image.cols, image.rows)));    
+    void draw(cv::Mat& background){ // parametro: é um parametro de referenia para uma matriz de imagem do OpenCV
+        // Verficação do tamanho da imagem do fundo
+        if(background.cols < x + image.cols || background.rows < y + image.rows){
+            std::cerr << "A imagem do fundo é menor do que a posição e tamanho do bloco." << std::endl;
+            exit(1);
+        }
 
-        // Copiar a imagem para a tela branca
-        image.copyTo(whiteCanvas(cv::Rect(0, 0, image.cols, image.rows)));
+        // COpiar a imagem do bloco para a posição (x, y) na imagem de fundo
+        cv::Mat roi = background(cv::Rect(x, y, image.cols, image.rows)); // Criação da região de interesse (ROI); cv...: cria uum retangulo (subimagem) na posição x, y e de tamanho image.cols e image.rows
+        this->image.copyTo(roi);
     }
 };
 
