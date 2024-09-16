@@ -1,37 +1,118 @@
-#include <GL/glut.h>
-#include <cmath>
+#include <opencv2/opencv.hpp>
+#include <iostream>
 
-#define windowWidth 665
-#define windowHeight 875
 
-class 
-
-void draw();
-
-int main(int argc, char** argv) {
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-    glutInitWindowSize(windowWidth, windowHeight);
-    glutInitWindowPosition(0, 0);
-    glutCreateWindow("Pacman");
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Define a cor de fundo da janela como branca
-    glutDisplayFunc(draw); // Registra a função de desenhar
-    glutMainLoop(); // Entra no loop principal do GLUT
-
+int matrix_to_coords(int x,int y){
     return 0;
 }
 
-void draw(){
-    glClear(GL_COLOR_BUFFER_BIT); // Limpa o buffer de cor
-    glLoadIdentity(); // Reseta a matriz de transformação
+class Bloco{
+    public:
+    int x, y; // Coordenadas do bloco
+    int type; // Tipo do bloco (para selecionar a imagem)
+    int rotation; // Rotação do bloco
+    cv::Mat image; // Imagem do bloco
 
-    // A tela padrão do OpenGL tem suas coordenadas X e Y de -1 até 1
-    // Coordenada (-1, -1) é o canto inferior esquerdo
-    // Coordenada (-1, 1) é o canto superior esquerdo
-    // Coordenada (0, 0) é o centro da tela
-    
-    // Desenha várias formas com diferentes parâmetros
+    // Construtor
+    Bloco(int x, int y, int type) : x(x), y(y), type(type), rotation(0){
+        std::string src = "";
+        switch(type){
+            case 0:
+                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/vazio_zero.png";
+            case 1:
+                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/parede_peq_um.png";
+            case 11:
+                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/curva_peq_onze.png";
+            case 12:
+                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/curva_peq_doze.png";
+            case 13:
+                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/interseccao_peq_normal_treze.png";
+            case 14:
+                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/quina_peq_catorze.png";
+            case 2:
+                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/parede_normal_dois.png";
+            case 21:
+                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/curva_normal_vinteum.png";
+            case 22:
+                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/interseccao_normal_vintedois.png";
+            case 23:
+                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/quina_normal_vintetres.png";
+            case 3:
+                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/parede_grande_tres.png";
+            case 31:
+                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/quina_grande_trintaum.png";
+            default:
+                std::cout << "erro ao tentar colocar imagem do bloco" << std::end;
+                exit(1);
+        }
+        // Carregar a imagem
+        this->image = cv::imread(imagePath, cv::IMREAD_COLOR);
+        if (this->image.empty()) { // this->image (ver o pq)
+            std::cerr << "Erro ao ler a imagem: " << src << std::endl;
+            return -1;
+        }
+    }
 
+    void setRotation(int x, int y, int type){
+        // implementar
+    }
 
-    glutSwapBuffers(); // Troca os buffers para exibir o frame desenhado
+    // Função para desenhar uma imagem
+    void draw(){
+        // bom dia
+        this.image.copyTo(whiteCanvas(cv::Rect(0, 0, image.cols, image.rows)));    
+
+        // Copiar a imagem para a tela branca
+        image.copyTo(whiteCanvas(cv::Rect(0, 0, image.cols, image.rows)));
+    }
+};
+
+int main() {
+    // Matriz de tipos de bloco
+    std::vector<std::vector<int>> matrix = {
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {12, 1, 1, 1, 1, 1, 1, 1, 1, 13, 1, 1, 1, 1, 1, 1, 1, 1, 12},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 31, 31, 0, 31, 3, 31, 0, 2, 0, 31, 3, 31, 0, 31, 31, 0, 1},
+        {1, 0, 31, 31, 0, 31, 3, 31, 0, 23, 0, 31, 3, 31, 0, 31, 31, 0, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 23, 23, 0, 23, 0, 23, 2, 22, 2, 23, 0, 23, 0, 23, 23, 0, 1},
+        {1, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 1},
+        {12,1, 1, 11, 0, 22, 2, 23, 0, 23, 0, 23, 2, 22, 0, 11, 1, 1, 12},
+        {0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0},
+        {1, 1, 1, 11, 0, 23, 0, 11, 14, 0, 14, 11, 0, 23, 0, 11, 1, 1, 1},
+        {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+        {1, 1, 1, 11, 0, 23, 0, 11, 1, 1, 1, 11, 0, 23, 0, 11, 1, 1, 1},
+        {0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0},
+        {12, 1, 1, 11, 0, 23, 0, 23, 2, 22, 2, 23, 0, 23, 0, 11, 1, 1, 12},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 23, 21, 0, 23, 2, 23, 0, 23, 0, 23, 2, 23, 0, 21, 23, 0, 1},
+        {1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 1},
+        {13, 23, 0, 23, 0, 23, 0, 23, 2, 22, 2, 23, 0, 23, 0, 23, 0, 23, 13},
+        {1, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 1},
+        {1, 0, 23, 2, 2, 22, 2, 23, 0, 23, 0, 23, 2, 22, 2, 2, 23, 0, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {12, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 12},
+        {25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    };
+
+    // Criar uma tela branca
+    cv::Mat whiteCanvas(750, 570, CV_8UC3, cv::Scalar(255, 255, 255));
+
+    for(int y = 0; y < matrix.size(); y++){
+        for(int x = 0; x < matrix[y].size(); x++){
+            Bloco bloco(x * 30, y * 30, matrix[y][x]);
+            bloco.setRotation(x, y, matrix[y][x]);
+            bloco.draw(whiteCanvas);
+        }
+    }
+
+    // Exibir a tela
+    cv::imshow("Pacman", whiteCanvas);
+
+    // Esperar até que o usuário pressione uma tecla
+    cv::waitKey(0);
+
+    return 0;
 }
