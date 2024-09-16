@@ -4,6 +4,8 @@
 #define windowWidth 665
 #define windowHeight 875
 
+class 
+
 void draw();
 
 int main(int argc, char** argv) {
