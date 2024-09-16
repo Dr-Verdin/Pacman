@@ -19,28 +19,40 @@ class Bloco{
         switch(type){
             case 0:
                 src = "/home/dr-verdin/Evolutivos/Pacman/blocos/vazio_zero.png";
+                break;
             case 1:
                 src = "/home/dr-verdin/Evolutivos/Pacman/blocos/parede_peq_um.png";
+                break;
             case 11:
                 src = "/home/dr-verdin/Evolutivos/Pacman/blocos/curva_peq_onze.png";
+                break;
             case 12:
                 src = "/home/dr-verdin/Evolutivos/Pacman/blocos/curva_peq_doze.png";
+                break;
             case 13:
                 src = "/home/dr-verdin/Evolutivos/Pacman/blocos/interseccao_peq_normal_treze.png";
+                break;
             case 14:
                 src = "/home/dr-verdin/Evolutivos/Pacman/blocos/quina_peq_catorze.png";
+                break;
             case 2:
                 src = "/home/dr-verdin/Evolutivos/Pacman/blocos/parede_normal_dois.png";
+                break;
             case 21:
                 src = "/home/dr-verdin/Evolutivos/Pacman/blocos/curva_normal_vinteum.png";
+                break;
             case 22:
                 src = "/home/dr-verdin/Evolutivos/Pacman/blocos/interseccao_normal_vintedois.png";
+                break;
             case 23:
                 src = "/home/dr-verdin/Evolutivos/Pacman/blocos/quina_normal_vintetres.png";
+                break;
             case 3:
                 src = "/home/dr-verdin/Evolutivos/Pacman/blocos/parede_grande_tres.png";
+                break;
             case 31:
                 src = "/home/dr-verdin/Evolutivos/Pacman/blocos/quina_grande_trintaum.png";
+                break;
             default:
                 std::cout << "erro ao tentar colocar imagem do bloco" << std::end;
                 exit(1);
@@ -49,7 +61,7 @@ class Bloco{
         this->image = cv::imread(imagePath, cv::IMREAD_COLOR);
         if (this->image.empty()) { // this->image (ver o pq)
             std::cerr << "Erro ao ler a imagem: " << src << std::endl;
-            return -1;
+            exit(1);
         }
     }
 
