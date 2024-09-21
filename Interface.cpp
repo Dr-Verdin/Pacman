@@ -65,10 +65,8 @@ class Bloco{
         }
     }
 
-    void setRotation(int x, int y, int type){
-        if(y == 0){
-            rotation(90);
-        }
+    void setRotation(int x, int y, int type){ // implementar
+        rotation();
     }
 
     // Função para desenhar uma imagem
@@ -81,12 +79,12 @@ class Bloco{
 
         // COpiar a imagem do bloco para a posição (x, y) na imagem de fundo
         cv::Mat roi = background(cv::Rect(x, y, image.cols, image.rows)); // Criação da região de interesse (ROI); cv...: cria uum retangulo (subimagem) na posição x, y e de tamanho image.cols e image.rows
-        this->image.copyTo(roi);
+        image.copyTo(roi);
     }
 
     private:
-    void rotation(int angle){
-        // i=mplementar
+    void rotation(int angle){ // implementar
+        
     }
 };
 
