@@ -1,6 +1,6 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
-
+#include <vector>
 
 int matrix_to_coords(int x,int y){
     return 0;
@@ -54,11 +54,11 @@ class Bloco{
                 src = "/home/dr-verdin/Evolutivos/Pacman/blocos/quina_grande_trintaum.png";
                 break;
             default:
-                std::cout << "erro ao tentar colocar imagem do bloco" << std::end;
+                std::cout << "erro ao tentar colocar imagem do bloco" << std::endl;
                 exit(1);
         }
         // Carregar a imagem
-        this->image = cv::imread(imagePath, cv::IMREAD_COLOR);
+        this->image = cv::imread(src, cv::IMREAD_COLOR);
         if (this->image.empty()) { // this->image (ver o pq)
             std::cerr << "Erro ao ler a imagem: " << src << std::endl;
             exit(1);
@@ -66,7 +66,9 @@ class Bloco{
     }
 
     void setRotation(int x, int y, int type){
-        // implementar
+        if(y == 0){
+            rotation(90);
+        }
     }
 
     // Função para desenhar uma imagem
@@ -80,6 +82,11 @@ class Bloco{
         // COpiar a imagem do bloco para a posição (x, y) na imagem de fundo
         cv::Mat roi = background(cv::Rect(x, y, image.cols, image.rows)); // Criação da região de interesse (ROI); cv...: cria uum retangulo (subimagem) na posição x, y e de tamanho image.cols e image.rows
         this->image.copyTo(roi);
+    }
+
+    private:
+    void rotation(int angle){
+        // i=mplementar
     }
 };
 
@@ -116,8 +123,8 @@ int main() {
     // Criar uma tela branca
     cv::Mat whiteCanvas(750, 570, CV_8UC3, cv::Scalar(255, 255, 255));
 
-    for(int y = 0; y < matrix.size(); y++){
-        for(int x = 0; x < matrix[y].size(); x++){
+    for(std::vector<std::vector<int>>::size_type y = 0; y < matrix.size(); y++){
+        for(std::vector<std::vector<int>>::size_type x = 0; x < matrix[y].size(); x++){
             Bloco bloco(x * 30, y * 30, matrix[y][x]);
             bloco.setRotation(x, y, matrix[y][x]);
             bloco.draw(whiteCanvas);
@@ -132,3 +139,5 @@ int main() {
 
     return 0;
 }
+
+// Definir as imagens pra 30x30 pixels
