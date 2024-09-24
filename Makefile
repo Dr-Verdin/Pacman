@@ -1,19 +1,23 @@
-# Nome do compilador
+# Variáveis
 CXX = g++
+CXXFLAGS = -std=c++17 -Wall -I/usr/local/include/opencv4
+LDFLAGS = -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgcodecs
+TARGET = batata
+SRC = Interface.cpp
 
-# Opções de compilação
-CXXFLAGS = -Wall -Wextra -O2
+# Regra padrão
+all: $(TARGET)
 
-# Nome do executável
-TARGET = matrix
+# Regra para construir o executável
+$(TARGET): $(SRC)
+	$(CXX) $(CXXFLAGS) $(SRC) $(LDFLAGS) -o $(TARGET)
 
-# Lista de arquivos fonte
-SRCS = Interface.cpp
-
-# Regras para construir o executável
-$(TARGET): $(SRCS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRCS)
-
-# Limpar arquivos compilados
+# Regra para limpar os arquivos gerados
 clean:
 	rm -f $(TARGET)
+
+test:
+	make clean
+	make
+	clear
+	./batata

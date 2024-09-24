@@ -65,9 +65,9 @@ class Bloco{
         }
     }
 
-    void setRotation(int x, int y, int type){ // implementar
+    /*void setRotation(int x, int y, int type){ // implementar
         rotation();
-    }
+    }*/
 
     // Função para desenhar uma imagem
     void draw(cv::Mat& background){ // parametro: é um parametro de referenia para uma matriz de imagem do OpenCV
@@ -83,9 +83,9 @@ class Bloco{
     }
 
     private:
-    void rotation(int angle){ // implementar
+    /*void rotation(int angle){ // implementar
         
-    }
+    }*/
 };
 
 int main() {
@@ -124,7 +124,7 @@ int main() {
     for(std::vector<std::vector<int>>::size_type y = 0; y < matrix.size(); y++){
         for(std::vector<std::vector<int>>::size_type x = 0; x < matrix[y].size(); x++){
             Bloco bloco(x * 30, y * 30, matrix[y][x]);
-            bloco.setRotation(x, y, matrix[y][x]);
+            // bloco.setRotation(x, y, matrix[y][x]);
             bloco.draw(whiteCanvas);
         }
     }
