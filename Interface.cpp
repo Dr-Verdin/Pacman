@@ -6,55 +6,55 @@ int matrix_to_coords(int x,int y){
     return 0;
 }
 
-class Bloco{
+class Textura{
     public:
-    int x, y; // Coordenadas do bloco
-    int type; // Tipo do bloco (para selecionar a imagem)
-    int rotation; // Rotação do bloco
-    cv::Mat image; // Imagem do bloco
+    int x, y; // Coordenadas do textura
+    int type; // Tipo do textura (para selecionar a imagem)
+    int rotation; // Rotação do textura
+    cv::Mat image; // Imagem do textura
 
     // Construtor
-    Bloco(int x, int y, int type) : x(x), y(y), type(type), rotation(0){
+    Textura(int x, int y, int type) : x(x), y(y), type(type), rotation(0){
         std::string src = "";
         switch(type){
             case 0:
-                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/vazio_zero.png";
+                src = "/home/dr-verdin/Evolutivos/Pacman/texturas/vazio_zero.png";
                 break;
             case 1:
-                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/parede_peq_um.png";
+                src = "/home/dr-verdin/Evolutivos/Pacman/texturas/parede_peq_um.png";
                 break;
             case 11:
-                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/curva_peq_onze.png";
+                src = "/home/dr-verdin/Evolutivos/Pacman/texturas/curva_peq_onze.png";
                 break;
             case 12:
-                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/curva_peq_doze.png";
+                src = "/home/dr-verdin/Evolutivos/Pacman/texturas/curva_peq_doze.png";
                 break;
             case 13:
-                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/interseccao_peq_normal_treze.png";
+                src = "/home/dr-verdin/Evolutivos/Pacman/texturas/interseccao_peq_normal_treze.png";
                 break;
             case 14:
-                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/quina_peq_catorze.png";
+                src = "/home/dr-verdin/Evolutivos/Pacman/texturas/quina_peq_catorze.png";
                 break;
             case 2:
-                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/parede_normal_dois.png";
+                src = "/home/dr-verdin/Evolutivos/Pacman/texturas/parede_normal_dois.png";
                 break;
             case 21:
-                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/curva_normal_vinteum.png";
+                src = "/home/dr-verdin/Evolutivos/Pacman/texturas/curva_normal_vinteum.png";
                 break;
             case 22:
-                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/interseccao_normal_vintedois.png";
+                src = "/home/dr-verdin/Evolutivos/Pacman/texturas/interseccao_normal_vintedois.png";
                 break;
             case 23:
-                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/quina_normal_vintetres.png";
+                src = "/home/dr-verdin/Evolutivos/Pacman/texturas/quina_normal_vintetres.png";
                 break;
             case 3:
-                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/parede_grande_tres.png";
+                src = "/home/dr-verdin/Evolutivos/Pacman/texturas/parede_grande_tres.png";
                 break;
             case 31:
-                src = "/home/dr-verdin/Evolutivos/Pacman/blocos/quina_grande_trintaum.png";
+                src = "/home/dr-verdin/Evolutivos/Pacman/texturas/quina_grande_trintaum.png";
                 break;
             default:
-                std::cout << "erro ao tentar colocar imagem do bloco" << std::endl;
+                std::cout << "erro ao tentar colocar imagem da textura" << std::endl;
                 exit(1);
         }
         // Carregar a imagem
@@ -73,11 +73,11 @@ class Bloco{
     void draw(cv::Mat& background){ // parametro: é um parametro de referenia para uma matriz de imagem do OpenCV
         // Verficação do tamanho da imagem do fundo
         if(background.cols < x + image.cols || background.rows < y + image.rows){
-            std::cerr << "A imagem do fundo é menor do que a posição e tamanho do bloco." << std::endl;
+            std::cerr << "A imagem do fundo é menor do que a posição e tamanho da textura." << std::endl;
             exit(1);
         }
 
-        // COpiar a imagem do bloco para a posição (x, y) na imagem de fundo
+        // COpiar a imagem do textura para a posição (x, y) na imagem de fundo
         cv::Mat roi = background(cv::Rect(x, y, image.cols, image.rows)); // Criação da região de interesse (ROI); cv...: cria uum retangulo (subimagem) na posição x, y e de tamanho image.cols e image.rows
         image.copyTo(roi);
     }
@@ -89,7 +89,7 @@ class Bloco{
 };
 
 int main() {
-    // Matriz de tipos de bloco
+    // Matriz de tipos de textura
     std::vector<std::vector<int>> matrix = {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -123,9 +123,9 @@ int main() {
 
     for(std::vector<std::vector<int>>::size_type y = 0; y < matrix.size(); y++){
         for(std::vector<std::vector<int>>::size_type x = 0; x < matrix[y].size(); x++){
-            Bloco bloco(x * 30, y * 30, matrix[y][x]);
-            // bloco.setRotation(x, y, matrix[y][x]);
-            bloco.draw(whiteCanvas);
+            Textura textura(x * 30, y * 30, matrix[y][x]);
+            // textura.setRotation(x, y, matrix[y][x]);
+            textura.draw(whiteCanvas);
         }
     }
 
