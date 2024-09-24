@@ -137,5 +137,3 @@ int main() {
 
     return 0;
 }
-
-// Definir as imagens pra 30x30 pixels
