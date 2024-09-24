@@ -8,7 +8,7 @@ CXXFLAGS = -Wall -Wextra -O2
 TARGET = matrix
 
 # Lista de arquivos fonte
-SRCS = Mapa.cpp
+SRCS = Interface.cpp
 
 # Regras para construir o executável
 $(TARGET): $(SRCS)
