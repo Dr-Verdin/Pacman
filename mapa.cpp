@@ -92,13 +92,13 @@ int main() {
     char input; // Declara a variável input
 
     while (true) { // loop infinito para pernitir movimentos continuos
-        grid.display(player.x, player.y); // desenha a grade atualizada
+        grid.display(player.y, player.x); // desenha a grade atualizada
 
         std::cin >> input;
         // debugar ****
         switch (input) { // switch para verirficar a tecla acionada
-            case 'w': player.move(0, 1, grid); break; // cima
-            case 's': player.move(0, -1, grid); break;  // baixo
+            case 'w': player.move(0, -1, grid); break; // cima
+            case 's': player.move(0, 1, grid); break;  // baixo
             case 'a': player.move(-1, 0, grid); break; // esquerda
             case 'd': player.move(1, 0, grid); break;  // direita
             case 'q': return 0; // sai do programa
