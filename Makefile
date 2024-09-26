@@ -1,10 +1,10 @@
 # Variáveis
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -I/usr/local/include/opencv4
-LDFLAGS = -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgcodecs
-# LDFLAGS = -lncurses
+# LDFLAGS = -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgcodecs
+LDFLAGS = -lncurses
 TARGET = batata
-SRC = renderizacao.cpp
+SRC = mapa.cpp
 
 # Regra padrão
 all: $(TARGET)
